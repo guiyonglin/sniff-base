@@ -1,24 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import { Suspense } from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { routers } from './router'
+import json from './cdn/source.json';
+import Layout from './Layout';
+
+window.projectUmd = json;
+/**
+ * json = {
+    "marketing": "https://static-s.theckb.com/BusinessMarket/Easy/PC/marketing.js",
+    "oms": "https://static-s.theckb.com/BusinessMarket/Easy/PC/oms.js"
+  }
+ */
+
+const createRouter = () => {
+  return createBrowserRouter(routers.map((item) => {
+    return {
+        element: (
+            <Layout>
+                <Suspense fallback={<div>加载中</div>}>
+                    {item.element}
+                </Suspense>
+            </Layout>
+        ),
+        path: item.path,
+        errorElement: <div>err</div>
+    };
+}))
+}
+
+const router = createRouter();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <RouterProvider
+          router={router}
+          fallbackElement={<div>fallbackElement</div>}
+        />
   );
 }
 
