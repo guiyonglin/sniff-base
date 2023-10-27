@@ -29,7 +29,7 @@ const LayoutContainer = ({ children }) => {
   const navigate = useNavigate();
   const onSelectMenu = (item) => {
     if (item.key === '1') {
-      navigate('/oem/home')
+      navigate('/')
     } else if (item.key === '2') {
       navigate('/marketing/home')
     }else if (item.key === '3') {

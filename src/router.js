@@ -3,7 +3,7 @@ import Home from './pages/home'
 
 export const routers = [
     {
-        path: '/oem/home',
+        path: '/',
         element: (
             <Home />
         )
